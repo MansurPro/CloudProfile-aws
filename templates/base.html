@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CloudProfile</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">CloudProfile</p>
+        <h1>{{ page_title or 'Profile Hub' }}</h1>
+        <p class="subtitle">Build once, run locally, deploy to AWS.</p>
+      </div>
+      <div class="account-badge">
+        {% if session.get('username') %}
+          Logged in as <strong>{{ session.get('username') }}</strong>
+        {% else %}
+          Guest mode
+        {% endif %}
+      </div>
+    </header>
+
+    <nav class="stepper">
+      <div class="step {{ 'is-active' if step == 'register' else '' }}">
+        <span class="step-index">1</span>
+        <span class="step-label">Register</span>
+      </div>
+      <div class="step {{ 'is-active' if step == 'details' else '' }}">
+        <span class="step-index">2</span>
+        <span class="step-label">Details</span>
+      </div>
+      <div class="step {{ 'is-active' if step == 'profile' else '' }}">
+        <span class="step-index">3</span>
+        <span class="step-label">Profile</span>
+      </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="alerts">
+          {% for category, message in messages %}
+            <div class="alert {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <main class="card">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="page-footer">
+      <p>CloudProfile &middot; Flask + SQLite + File Upload</p>
+    </footer>
+  </div>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

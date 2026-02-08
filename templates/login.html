@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% set page_title = "Welcome Back" %}
+
+{% block content %}
+<div class="auth-grid">
+  <section>
+    <h2>Log in</h2>
+    <p class="lead">Access your saved profile and uploads.</p>
+    <form class="form" method="post" novalidate>
+      <label class="field">
+        <span>Username</span>
+        <input name="username" type="text" required />
+      </label>
+
+      <label class="field password-field">
+        <span>Password</span>
+        <div class="password-row">
+          <input name="password" type="password" required />
+          <button class="ghost-btn" type="button" data-toggle="password">Show</button>
+        </div>
+      </label>
+
+      <button class="primary-btn" type="submit">Log in</button>
+    </form>
+    <p class="meta">
+      New here?
+      <a href="{{ url_for('register') }}">Go to register</a>
+    </p>
+  </section>
+
+  <aside class="side-panel">
+    <h3>Tip</h3>
+    <p>Use the same username and password you registered with.</p>
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const toggle = document.querySelector('[data-toggle="password"]');
+  const passwordInput = document.querySelector('input[name="password"]');
+  if (toggle && passwordInput) {
+    toggle.addEventListener('click', () => {
+      const isHidden = passwordInput.type === 'password';
+      passwordInput.type = isHidden ? 'text' : 'password';
+      toggle.textContent = isHidden ? 'Hide' : 'Show';
+    });
+  }
+</script>
+{% endblock %}

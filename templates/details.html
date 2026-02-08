@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% set page_title = "Profile Details" %}
+
+{% block content %}
+<section>
+  <h2>Tell us about you</h2>
+  <p class="lead">These details will appear on your profile card.</p>
+
+  <form class="form" method="post" novalidate>
+    <div class="field-row">
+      <label class="field">
+        <span>First name</span>
+        <input name="firstname" type="text" value="{{ user.firstname or '' }}" autofocus />
+      </label>
+      <label class="field">
+        <span>Last name</span>
+        <input name="lastname" type="text" value="{{ user.lastname or '' }}" />
+      </label>
+    </div>
+
+    <label class="field">
+      <span>Email</span>
+      <input name="email" type="email" placeholder="you@email.com" value="{{ user.email or '' }}" />
+    </label>
+
+    <label class="field">
+      <span>Address</span>
+      <textarea name="address" rows="4" maxlength="240" placeholder="Street, city, state">{{ user.address or '' }}</textarea>
+      <div class="counter"><span id="address-count">0</span>/240</div>
+    </label>
+
+    <div class="button-row">
+      <button class="primary-btn" type="submit">Save details</button>
+      <a class="secondary-btn" href="{{ url_for('profile', username=user.username) }}">Back to profile</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const addressField = document.querySelector('textarea[name="address"]');
+  const counter = document.getElementById('address-count');
+  const updateCount = () => {
+    if (!addressField || !counter) return;
+    counter.textContent = addressField.value.length;
+  };
+  if (addressField) {
+    addressField.addEventListener('input', updateCount);
+    updateCount();
+  }
+</script>
+{% endblock %}

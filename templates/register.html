@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% set page_title = "Create Your Account" %}
+
+{% block content %}
+<div class="auth-grid">
+  <section>
+    <h2>Start your CloudProfile</h2>
+    <p class="lead">Register in seconds, then add your profile details.</p>
+    <form class="form" method="post" novalidate>
+      <label class="field">
+        <span>Username</span>
+        <input name="username" type="text" placeholder="yourname" required />
+        <span class="hint">Must be unique.</span>
+      </label>
+
+      <label class="field password-field">
+        <span>Password</span>
+        <div class="password-row">
+          <input name="password" type="password" placeholder="Create a password" required />
+          <button class="ghost-btn" type="button" data-toggle="password">Show</button>
+        </div>
+        <span class="hint">Keep it memorable for class demos.</span>
+      </label>
+
+      <button class="primary-btn" type="submit">Create account</button>
+    </form>
+    <p class="meta">
+      Already have an account?
+      <a href="{{ url_for('login') }}">Go to login</a>
+    </p>
+  </section>
+
+  <aside class="side-panel">
+    <h3>Why CloudProfile?</h3>
+    <ul>
+      <li>Store your details in SQLite.</li>
+      <li>Upload Limerick.txt and get word counts.</li>
+      <li>Deploy the same code to AWS EC2.</li>
+    </ul>
+  </aside>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const toggle = document.querySelector('[data-toggle="password"]');
+  const passwordInput = document.querySelector('input[name="password"]');
+  if (toggle && passwordInput) {
+    toggle.addEventListener('click', () => {
+      const isHidden = passwordInput.type === 'password';
+      passwordInput.type = isHidden ? 'text' : 'password';
+      toggle.textContent = isHidden ? 'Hide' : 'Show';
+    });
+  }
+</script>
+{% endblock %}

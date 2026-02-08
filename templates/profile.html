@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% set page_title = "Your Profile" %}
+
+{% block content %}
+<div class="profile-grid">
+  <section class="profile-card">
+    <div class="profile-header">
+      <div>
+        <h2>{{ user.firstname or 'First' }} {{ user.lastname or 'Last' }}</h2>
+        <p class="muted">{{ user.email or 'Email not provided yet' }}</p>
+      </div>
+      <div class="pill">{{ completeness }}% complete</div>
+    </div>
+
+    <div class="profile-details">
+      <div>
+        <p class="label">Username</p>
+        <p>{{ user.username }}</p>
+      </div>
+      <div>
+        <p class="label">Address</p>
+        <p>{{ user.address or 'No address saved yet.' }}</p>
+      </div>
+    </div>
+
+    <div class="button-row">
+      <a class="secondary-btn" href="{{ url_for('details') }}">Edit details</a>
+      <a class="secondary-btn" href="{{ url_for('logout') }}">Logout</a>
+      <a class="primary-btn" href="#upload">Upload Limerick</a>
+    </div>
+  </section>
+
+  <section class="upload-card" id="upload">
+    <h3>Limerick.txt Upload</h3>
+    <p class="muted">Upload a .txt file to see its word count.</p>
+
+    <div class="file-status">
+      <div>
+        <p class="label">Uploaded</p>
+        <p>{{ 'Yes' if has_file else 'No' }}</p>
+      </div>
+      <div>
+        <p class="label">Word count</p>
+        <p>{{ word_count if word_count is not none else '&mdash;' | safe }}</p>
+      </div>
+    </div>
+
+    <form class="form" style="margin-bottom: 2rem;" method="post" enctype="multipart/form-data">
+      <label class="field">
+        <span>Select .txt file</span>
+        <input type="file" name="limerick" accept=".txt" required />
+        <span class="hint">We recommend naming it Limerick.txt</span>
+      </label>
+      <button class="primary-btn" type="submit">Upload file</button>
+    </form>
+
+    {% if has_file %}
+      <a class="ghost-btn full" href="{{ url_for('download', username=user.username) }}">Download uploaded file</a>
+    {% else %}
+      <button class="ghost-btn full" type="button" disabled>Download uploaded file</button>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+# add gitignore
+# ignore virtual environment
+venv/
+# ignore __pycache__ directories
+__pycache__/
+# ignore .env file
+.env
+# ignore .DS_Store files (macOS)
+.DS_Store
+# ignore .idea directory (JetBrains IDEs)
+.idea/
+# ignore .vscode directory (Visual Studio Code)
+.vscode/
+# ignore SQLite database
+users.db
+# ignore uploads directory
+uploads/
+# ignore log files
+*.log
+
+cloud-flask-key.pem
